@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;
+}
+
+body {
+	font-family: 'Rubik',
+		sans-serif;
+}
+
+.container {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #eee;
+}
+
+.formContainer {
+	padding: 30px;
+	border-radius: 10px;
+	background: #fff;
+	min-height: 300px;
+	min-width: 350px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.335);
+}
+
+.form {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.headerForm h3 {
+	font-size: 30px;
+	padding: 25px 15px;
+	font-weight: 300;
+}
+
+.form .formInputs {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.form .formInputs div {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.inputEmail span,
+.inputPassword span {
+	font-size: 14px;
+}
+
+input {
+	padding: 7px;
+	border-radius: 10px;
+	border: 1px solid lightgray;
+	outline: none;
+	font-size: 16px;
+	font-weight: 100;
+	background: #f7f7f7;
+}
+
+input:hover {
+	border: 1px solid darkgray;
+}
+
+.inputPassword {
+	margin-bottom: 30px;
+}
+
+.submitBtn {
+	padding: 7px 40px;
+	border-radius: 10px;
+	border: 1px solid #fc4a36;
+	outline: 0;
+	background: #fc4a36;
+	color: white;
+	transition: .3s ease-in-out;
+}
+
+.submitBtn:hover {
+	background: transparent;
+	color: #fc4a36;
+}
+
+.loginBtn {
+	margin-top: 15px;
+}
+
+.loginBtn a {
+	font-size: 14px;
+	color: lightskyblue;
+}
