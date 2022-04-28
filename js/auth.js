@@ -1,6 +1,7 @@
 // ==================== BASE ======================
 
 const BASE_URL = 'https://todo-itacademy.herokuapp.com/api'
+// const DELETE_USER = 'https://todo-itacademy.herokuapp.com/api/users/me'
 
 // ===================== IMPORTS =====================
 
@@ -32,12 +33,16 @@ $submit.addEventListener('click', (e) => {
 			$password.style.borderColor = 'red'
 		}
 	} else {
+		$submit.disabled = true
 		getRegister('login')
+
+		$email.value = ''
+		$password.value = ''
 	}
 })
 
 function getRegister(endPoint) {
-	fetch(`${BASE_URL}/${endPoint}`, {
+	fetch(`${BASE_URL}/${endPoint}/`, {
 		method: 'POST',
 		body: JSON.stringify({
 			email: $email.value,
@@ -46,15 +51,28 @@ function getRegister(endPoint) {
 		headers: { 'Content-type': 'application/json' },
 	})
 		.then((response) => {
-			response.json()
+			if (response.status < 400) {
+				return response.json()
+			}
 		})
 		.then((res) => {
 			console.log(res)
-			localStorage.setItem('accessToken', res.accessToken)
-			localStorage.setItem('refreshToken', res.refreshToken)
-			localStorage.setItem('userId', res.user.id)
+			if (res) {
+				localStorage.setItem('accessToken', res.accessToken)
+				localStorage.setItem('refreshToken', res.refreshToken)
+				localStorage.setItem('userId', res.user.id)
+				localStorage.setItem('isActivated', res.user.isActivated)
+				location.reload()
+			}
 		})
-	// .catch((err) => {
-	// 	console.log(err)
-	// })
+		.finally(() => {
+			$submit.disabled = false
+		})
 }
+
+window.addEventListener('load', () => {
+	const isActivated = localStorage.getItem('isActivated')
+	if (isActivated) {
+		open('../index.html', '_self')
+	}
+})

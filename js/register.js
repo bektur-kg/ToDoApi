@@ -32,7 +32,18 @@ $submit.addEventListener('click', (e) => {
 			$password.style.borderColor = 'red'
 		}
 	} else {
+		$submit.disabled = true
 		getRegister('registration')
+		$email.value = ''
+		$password.value = ''
+	}
+})
+
+window.addEventListener('load', () => {
+	const accessToken = localStorage.getItem('accessToken')
+	console.log(accessToken)
+	if (accessToken) {
+		open('../auth.html', '_self')
 	}
 })
 
@@ -45,12 +56,21 @@ function getRegister(endPoint) {
 		}),
 		headers: { 'Content-type': 'application/json' },
 	})
-		.then((response) => response.json())
-		.then((res) => {
-			console.log(res)
-			localStorage.setItem('accessToken', res.accessToken)
-			localStorage.setItem('refreshToken', res.refreshToken)
-			localStorage.setItem('userId', res.user.id)
+		.then((response) => {
+			if (response.status < 400) {
+				return response.json()
+			}
 		})
-	// .catch((rej) => console.log(rej))
+		.then((res) => {
+			if (res) {
+				localStorage.setItem('accessToken', res.accessToken)
+				localStorage.setItem('refreshToken', res.refreshToken)
+				localStorage.setItem('userId', res.user.id)
+				localStorage.setItem('isActivated', res.user.isActivated)
+				open('../index.html', '_self')
+			}
+		})
+		.finally(() => {
+			$submit.disabled = false
+		})
 }
